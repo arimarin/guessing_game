@@ -8,10 +8,8 @@ fn main() {
     // Generate random number between 1 and 100
     let secret_number = rand::thread_rng().gen_range(1..101);
 
-    println!("The secret number is {0}", secret_number);
-
     loop {
-        print!("Please input your guess: ");
+        print!("Please input your guess (`quit` or `exit` to exit): ");
         io::stdout()
             .flush()
             .expect("Failed to flush stdout!");
@@ -22,7 +20,21 @@ fn main() {
             .read_line(&mut guess)
             .expect("Failed to read line!");
 
-        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                match guess.to_lowercase().trim() {
+                    "quit" | "exit" => {
+                        println!("Received {}, exiting program...", guess.trim());
+                        break;
+                    },
+                    _ => {
+                        println!("Not a valid guess: {}. Continuing...", guess.trim());
+                        continue;
+                    }
+                }
+            },
+        };
 
         println!("You guessed: {}", guess);
 
