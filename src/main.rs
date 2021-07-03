@@ -30,13 +30,13 @@ fn main() {
                     "quit" | "exit" => {
                         println!("Received {}, exiting program...", guess.trim());
                         break;
-                    },
+                    }
                     _ => {
                         println!("Not a valid guess: {}. Continuing...", guess.trim());
                         continue;
                     }
                 }
-            },
+            }
         };
 
         // Guessed value and was it less, greater or equal. When equal -> exit
@@ -47,7 +47,7 @@ fn main() {
             Ordering::Equal => {
                 println!("Correct! You win!");
                 break;
-            },
+            }
         }
     }
 }
